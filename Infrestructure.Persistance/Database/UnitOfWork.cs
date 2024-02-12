@@ -16,6 +16,7 @@ namespace Infrestructure.Persistance.Database
 
         private ProductRepository _productRepository;
         private CompanyRepository _CompanyRepository;
+        private UserRepository _userRepository;
 
         public UnitOfWork(IApplicationDataContext context)
         {
@@ -24,6 +25,7 @@ namespace Infrestructure.Persistance.Database
 
         public ICompanyRepository CompanyRepository => _CompanyRepository ??= new(_context);
         public IProductRepository ProductRepository =>_productRepository??= new(_context);
+        public IUserRepository UserRepository =>_userRepository??= new(_context);
 
         public  int Commit() =>  _context.SaveChanges();
 

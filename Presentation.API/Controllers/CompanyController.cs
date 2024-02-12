@@ -24,9 +24,7 @@ namespace Presentation.API.Controllers
         public async Task<ActionResult<List<CompanyDTO>>> GetAll(CancellationToken cancellationToken = default)
         {
             GetAllComapniesQuery Query = new();
-
             List<CompanyDTO> Response = await _mediator.Send(Query, cancellationToken);
-
             return Ok(Response);
         }
 

@@ -1,5 +1,6 @@
 ﻿using Core.Application.Database;
 using Core.Domain.Entities;
+using Entities.Users;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,5 +19,6 @@ namespace Infrestructure.Persistance.Database
         }
         public DbSet<Product> Products { get; set; }
         public DbSet<Company> Companies { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

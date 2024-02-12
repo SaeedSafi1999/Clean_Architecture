@@ -12,6 +12,7 @@ namespace Core.Application.Database
     {
         ICompanyRepository CompanyRepository { get; }
         IProductRepository ProductRepository { get; }
+        IUserRepository UserRepository { get; }
         int Commit();
         Task<int> CommitAsync(CancellationToken cancellationToken = default);
     }

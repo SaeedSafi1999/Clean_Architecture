@@ -45,6 +45,7 @@ namespace Core.Application.Common
                 return false;
             }
         }
+        public IQueryable<T> GetQuery() => Context.Set<T>().AsQueryable();
 
         public async Task<IReadOnlyList<T>> GetAllAsync(CancellationToken deafult) => await Context.Set<T>().ToListAsync();
 
@@ -92,5 +93,7 @@ namespace Core.Application.Common
                 return false;
             }
         }
+
+        public IQueryable<T> GetAsNoTrackingQuery() => Context.Set<T>().AsNoTracking().AsQueryable();
     }
 }

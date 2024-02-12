@@ -25,10 +25,10 @@ namespace Core.Application.Requests.Company.Commands
 
             async Task<ServiceRespnse<bool>> IRequestHandler<AddCompanyCommand, ServiceRespnse<bool>>.Handle(AddCompanyCommand request, CancellationToken cancellationToken)
             {
-                ServiceRespnse<bool> response = new() { IsSuccess=true};
+                ServiceRespnse<bool> response = new() { IsSuccess = true };
                 try
                 {
-                   var InsertResult = await _unitofwork.CompanyRepository.AddAsync(new Domain.Entities.Company
+                    var InsertResult = await _unitofwork.CompanyRepository.AddAsync(new Domain.Entities.Company
                     {
                         Description = request.addCompanyDTO.Description,
                         Name = request.addCompanyDTO.Name,
@@ -47,7 +47,7 @@ namespace Core.Application.Requests.Company.Commands
                         Message = ex.Message,
                     };
                 }
-               
+
             }
         }
     }

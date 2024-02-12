@@ -13,6 +13,8 @@ namespace Core.Application.Common
         Task<T> GetByIdAsync(params object[] keyValues);
         Task<bool> AddAsync(T Entity);
         Task<bool> AddRangeAsync(List<T> Entities);
+        IQueryable<T> GetQuery();
+        IQueryable<T> GetAsNoTrackingQuery();
         Task<bool> RemoveAsync(int id);
         bool Update(T Entity);
         bool UpdateRangeAsync(List<T> Entities);

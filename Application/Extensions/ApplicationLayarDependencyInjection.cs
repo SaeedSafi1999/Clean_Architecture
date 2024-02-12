@@ -1,11 +1,11 @@
-﻿using Core.Application.Extensions.Mapper;
+﻿using Common;
+using Core.Application.Extensions.Mapper;
+using Core.Domain.BaseEntity;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.Extensions;
+using Services.Services;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.Application.Extensions
 {
@@ -22,6 +22,31 @@ namespace Core.Application.Extensions
                 cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
                 
             });
+
+            var commonAssembly = typeof(SiteSettings).Assembly;
+            var entitiesAssembly = typeof(IEntity).Assembly;
+            var dataAssembly = typeof(AppContext).Assembly;
+            var servicesAssembly = typeof(JwtService).Assembly;
+            var applicationAssmemly = typeof(IRequest<>).Assembly;
+            Services.Scan(s =>
+            s.FromAssemblies(commonAssembly, entitiesAssembly, dataAssembly, servicesAssembly, applicationAssmemly)
+            .AddClasses(c => c.AssignableTo(typeof(IScopedDependency))
+            ).AsImplementedInterfaces()
+            .WithScopedLifetime());
+
+            Services.Scan(s =>
+            s.FromAssemblies(commonAssembly, entitiesAssembly, dataAssembly, servicesAssembly, applicationAssmemly)
+            .AddClasses(c => c.AssignableTo(typeof(ITransientDependency))
+            ).AsImplementedInterfaces()
+            .WithScopedLifetime());
+
+            Services.Scan(s =>
+            s.FromAssemblies(commonAssembly, entitiesAssembly, dataAssembly, servicesAssembly, applicationAssmemly)
+            .AddClasses(c => c.AssignableTo(typeof(ISingletonDependency))
+            ).AsImplementedInterfaces()
+            .WithScopedLifetime());
+
+
 
             return Services;
         }
