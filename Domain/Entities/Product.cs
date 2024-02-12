@@ -18,7 +18,6 @@ namespace Core.Domain.Entities
         public int CompanyId { get; set; }
         public string Name { get; set; }
         public DateTime CreateTime { get; set; }
-        [ForeignKey("CompanyId")]
         public virtual Company Company { get; set; }
     }
 }
