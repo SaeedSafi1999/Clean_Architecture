@@ -19,7 +19,6 @@ namespace Application.Cqrs
             {
                 c.RegisterServicesFromAssemblies(typeof(ICommand<>).Assembly);
                 c.AddOpenBehavior(typeof(ValidationBehavior<,>));
-                c.AddOpenBehavior(typeof(TransactionBehavior<,>));
             });
             services.AddValidatorsFromAssembly(typeof(ICommand<>).Assembly);
             services.AddScoped<ICommandDispatcher, CommandDispatcher>();

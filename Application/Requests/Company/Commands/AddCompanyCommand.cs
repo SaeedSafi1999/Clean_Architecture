@@ -1,4 +1,5 @@
-﻿using Core.Application.Database;
+﻿using Application.Cqrs.Commands;
+using Core.Application.Database;
 using Core.Domain.DTOs.Company;
 using Core.Domain.DTOs.Shared;
 using MediatR;
@@ -7,14 +8,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Core.Application.Requests.Company.Commands
 {
-    public class AddCompanyCommand : IRequest<ServiceRespnse<bool>>
+    public class AddCompanyCommand : ICommand<ServiceRespnse<bool>>
     {
         public AddCompanyDTO addCompanyDTO { get; set; }
 
-        public class Handle : IRequestHandler<AddCompanyCommand, ServiceRespnse<bool>>
+        public class Handle : ICommandHandler<AddCompanyCommand, ServiceRespnse<bool>>
         {
             private readonly IUnitOfWork _unitofwork;
 
@@ -28,7 +30,8 @@ namespace Core.Application.Requests.Company.Commands
                 ServiceRespnse<bool> response = new() { IsSuccess = true };
                 try
                 {
-                    var InsertResult = await _unitofwork.CompanyRepository.AddAsync(new Domain.Entities.Company
+                    var repo = _unitofwork.GetRepository<Core.Domain.Entities.Company>();
+                    var InsertResult = await repo.AddAsync(new Domain.Entities.Company
                     {
                         Description = request.addCompanyDTO.Description,
                         Name = request.addCompanyDTO.Name,

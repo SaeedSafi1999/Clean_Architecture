@@ -22,9 +22,6 @@ namespace Infrestructure.Persistance.Extensions
             //Add CompanyRepository Dependencies
             Servcies.AddScoped<ICompanyRepository, CompanyRepository>();
 
-            //Add ProductRepository Dependencies
-            Servcies.AddScoped<ICompanyRepository, CompanyRepository>();
-
             return Servcies;
         }
     }

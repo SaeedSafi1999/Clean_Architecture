@@ -4,8 +4,8 @@ using Core.Domain.BaseEntity;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions;
-using Services.Services;
 using System.Reflection;
+using Application.Cqrs;
 
 namespace Core.Application.Extensions
 {
@@ -20,32 +20,33 @@ namespace Core.Application.Extensions
             Services.AddMediatR(cfg =>
             {
                 cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-                
             });
 
+            //add scope transient singletone 
             var commonAssembly = typeof(SiteSettings).Assembly;
             var entitiesAssembly = typeof(IEntity).Assembly;
             var dataAssembly = typeof(AppContext).Assembly;
-            var servicesAssembly = typeof(JwtService).Assembly;
             var applicationAssmemly = typeof(IRequest<>).Assembly;
             Services.Scan(s =>
-            s.FromAssemblies(commonAssembly, entitiesAssembly, dataAssembly, servicesAssembly, applicationAssmemly)
+            s.FromAssemblies(commonAssembly, entitiesAssembly, dataAssembly, applicationAssmemly)
             .AddClasses(c => c.AssignableTo(typeof(IScopedDependency))
             ).AsImplementedInterfaces()
             .WithScopedLifetime());
 
             Services.Scan(s =>
-            s.FromAssemblies(commonAssembly, entitiesAssembly, dataAssembly, servicesAssembly, applicationAssmemly)
+            s.FromAssemblies(commonAssembly, entitiesAssembly, dataAssembly, applicationAssmemly)
             .AddClasses(c => c.AssignableTo(typeof(ITransientDependency))
             ).AsImplementedInterfaces()
             .WithScopedLifetime());
 
             Services.Scan(s =>
-            s.FromAssemblies(commonAssembly, entitiesAssembly, dataAssembly, servicesAssembly, applicationAssmemly)
+            s.FromAssemblies(commonAssembly, entitiesAssembly, dataAssembly, applicationAssmemly)
             .AddClasses(c => c.AssignableTo(typeof(ISingletonDependency))
             ).AsImplementedInterfaces()
             .WithScopedLifetime());
 
+            //add cqrs 
+            Services.AddCqrs();
 
 
             return Services;

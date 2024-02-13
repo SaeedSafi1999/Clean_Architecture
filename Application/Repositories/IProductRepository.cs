@@ -11,6 +11,5 @@ namespace Core.Application.Repositories
 {
     public interface IProductRepository:IGenericRepository<Product>
     {
-        Task<IEnumerable<ProductDTO>> GetProductsOfCompany(int CompanyId);
     }
 }

@@ -13,9 +13,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{C4089F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{EE97CA72-FB8B-4C22-A7ED-45B0F1B2D178}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Domain", "Domain\Core.Domain.csproj", "{2201C5A3-7670-4756-A2C5-23FA92CA0936}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Domain", "Domain\Core.Domain.csproj", "{2201C5A3-7670-4756-A2C5-23FA92CA0936}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Application", "Application\Core.Application.csproj", "{51BDC11A-E507-4EF4-A424-BA593CD84502}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Application", "Application\Core.Application.csproj", "{51BDC11A-E507-4EF4-A424-BA593CD84502}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{0B301505-B06F-49D6-8361-B4331ABF1771}"
 EndProject
@@ -25,11 +25,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Persistance", "Persistance"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{0960F065-FA50-4D63-80EC-60DD2E1813C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrestructure.Persistance", "Infrestructure.Persistance\Infrestructure.Persistance.csproj", "{37D6CF98-1470-4677-8330-19EA85ECB18D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrestructure.Persistance", "Infrestructure.Persistance\Infrestructure.Persistance.csproj", "{37D6CF98-1470-4677-8330-19EA85ECB18D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrestructure.Shared", "Infrestructure.Shared\Infrestructure.Shared.csproj", "{786E0BFE-F3D4-41EF-BDA7-5352F938C41F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrestructure.Shared", "Infrestructure.Shared\Infrestructure.Shared.csproj", "{786E0BFE-F3D4-41EF-BDA7-5352F938C41F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation.API", "Presentation.API\Presentation.API.csproj", "{39417920-90E2-42B1-B971-07AC03D73C76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presentation.API", "Presentation.API\Presentation.API.csproj", "{39417920-90E2-42B1-B971-07AC03D73C76}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebFramework", "WebFramework", "{FDA12797-84BB-4AB6-928A-29F868DE8DA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebFramework", "WebFramework\WebFramework.csproj", "{FB236DD8-550D-41DE-BECF-B3417C42BF52}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +61,10 @@ Global
 		{39417920-90E2-42B1-B971-07AC03D73C76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39417920-90E2-42B1-B971-07AC03D73C76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39417920-90E2-42B1-B971-07AC03D73C76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB236DD8-550D-41DE-BECF-B3417C42BF52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB236DD8-550D-41DE-BECF-B3417C42BF52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB236DD8-550D-41DE-BECF-B3417C42BF52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB236DD8-550D-41DE-BECF-B3417C42BF52}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +83,8 @@ Global
 		{37D6CF98-1470-4677-8330-19EA85ECB18D} = {8ED5AAE8-A4C5-4EDD-B72C-60D6C3DC3E89}
 		{786E0BFE-F3D4-41EF-BDA7-5352F938C41F} = {0960F065-FA50-4D63-80EC-60DD2E1813C6}
 		{39417920-90E2-42B1-B971-07AC03D73C76} = {0E5FED55-0D01-4768-A5F6-344B51B7CBF4}
+		{FDA12797-84BB-4AB6-928A-29F868DE8DA9} = {277F0188-D97B-4182-8EE6-43B418A48F57}
+		{FB236DD8-550D-41DE-BECF-B3417C42BF52} = {FDA12797-84BB-4AB6-928A-29F868DE8DA9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5124AED7-3671-41E1-AC4D-76934F66A9AA}

@@ -1,5 +1,8 @@
 using Core.Application.Extensions;
 using Infrestructure.Persistance.Extensions;
+using Microsoft.AspNetCore.Builder;
+using WebFramework.Configuration;
+using WebFramework.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +19,12 @@ builder.Services.AddApplicationServices();
 builder.Services.AddPersistanceInfrestructurelayarServcies();
 
 var app = builder.Build();
+
+app.IntializeDatabase();
+
+app.UseCustomExceptionHandler();
+
+app.UseHsts(app.Environment);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

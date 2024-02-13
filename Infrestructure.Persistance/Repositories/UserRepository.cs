@@ -16,15 +16,6 @@ namespace Infrestructure.Persistance.Repositories
     public class UserRepository : GenericRepository<User>, IUserRepository
     {
         public UserRepository(IApplicationDataContext context) : base(context) { }
-        public async Task<IEnumerable<ProductDTO>> GetProductsOfCompany(int CompanyId)
-        {
-            return await Context.Products.Where(x => x.CompanyId == CompanyId).Select(x => new ProductDTO
-            {
-                CompanyId = x.CompanyId,
-                CreateTime = x.CreateTime,
-                Id = x.Id,
-                Name = x.Name,
-            }).ToListAsync();
-        }
+        
     }
 }

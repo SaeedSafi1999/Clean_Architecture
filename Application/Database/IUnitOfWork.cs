@@ -1,4 +1,5 @@
-﻿using Core.Application.Repositories;
+﻿using Core.Application.Common;
+using Core.Application.Repositories;
 using Core.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -15,5 +16,6 @@ namespace Core.Application.Database
         IUserRepository UserRepository { get; }
         int Commit();
         Task<int> CommitAsync(CancellationToken cancellationToken = default);
+        IGenericRepository<TEntity> GetRepository<TEntity>() where TEntity : class;
     }
 }

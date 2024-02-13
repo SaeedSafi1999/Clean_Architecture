@@ -1,4 +1,5 @@
-﻿using Core.Application.Database;
+﻿using Core.Application.Common;
+using Core.Application.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -12,7 +13,11 @@ namespace Infrestructure.Persistance.Database.DependencyInjection
 {
     public static class DatabaseDependencyInjection
     {
-
+        //add generic repository Dependency Method
+        public static IServiceCollection AddRepositoriesDependency(this IServiceCollection Services)
+        {
+           return Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+        }
 
         //Add DbContext Dependency Method
         public static IServiceCollection AddDbContextServices(this IServiceCollection Services)
@@ -22,7 +27,7 @@ namespace Infrestructure.Persistance.Database.DependencyInjection
 
             Services.AddDbContext<ApplicationDataContext>(options =>
             {
-                options.UseSqlServer("Server=.;Initial Catalog=Clean_ArchitectureDB;Integrated Security=true;TrustServerCertificate=True;");
+                options.UseSqlServer("Server=192.168.1.20;Database=Clean_ArchitectureDB;User Id=sa;Password=Simagar@2020; MultipleActiveResultSets=True;Connection Timeout=30;TrustServerCertificate=True;");
             });
 
             return Services;

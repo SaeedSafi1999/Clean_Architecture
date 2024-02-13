@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <Folder Include="CQRS\" />
-    <Folder Include="Requests\Product\Commands\" />
+    <Folder Include="Requests\" />
   </ItemGroup>
 
   <ItemGroup>
