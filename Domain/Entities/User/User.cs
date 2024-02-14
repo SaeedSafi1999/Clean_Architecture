@@ -2,18 +2,18 @@
 
 using Core.Domain.BaseEntity;
 using Core.Domain.Entities.Role;
+using Entities.Users;
 using System.ComponentModel.DataAnnotations;
 
-namespace Entities.Users
+namespace Entities.UsersEntity
 {
     public class User :BaseEntity<long>
     {
         public User()
         {
-            IsActive = true;
+            IsActive = false;
         }
         public string FullName { get; set; }
-        public DateTime CreateDate { get; private set; } = DateTime.Now;
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string UserName { get; set; }

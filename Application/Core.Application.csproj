@@ -8,7 +8,10 @@
 
   <ItemGroup>
     <Folder Include="CQRS\" />
-    <Folder Include="Requests\" />
+    <Folder Include="Requests\User\Query\" />
+    <Folder Include="Requests\Authorize\DTO\" />
+    <Folder Include="Requests\Authorize\Command\" />
+    <Folder Include="Requests\Authorize\Query\" />
   </ItemGroup>
 
   <ItemGroup>
