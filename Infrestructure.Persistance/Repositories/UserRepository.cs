@@ -4,6 +4,7 @@ using Core.Application.Repositories;
 using Core.Domain.DTOs.Product;
 using Core.Domain.Entities;
 using Entities.Users;
+using Entities.UsersEntity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

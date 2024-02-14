@@ -1,4 +1,5 @@
 ﻿using Entities.Users;
+using Entities.UsersEntity;
 using System;
 using System.Collections.Generic;
 using System.Linq;

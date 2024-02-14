@@ -1,4 +1,5 @@
 ﻿using Entities.Users;
+using Entities.UsersEntity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace Core.Application.Requests.User.DTO
         public string LastName { get; set; }
         public string UserName { get; set; }
         public int Age { get; set; }
+        public string Mobile { get; set; }
+        public string? Email { get; set; }
         public GenderType Gender { get; set; }
         public UserType UserType { get; set; }
         public string? Discord { get; set; }
