@@ -1,6 +1,7 @@
 ﻿
 
 using Core.Domain.BaseEntity;
+using Core.Domain.Entities.Role;
 using System.ComponentModel.DataAnnotations;
 
 namespace Entities.Users
@@ -31,6 +32,8 @@ namespace Entities.Users
         public bool? IsGoogleAuthenticatorEnable { get; set; }
         public string? GoogleAuthenticatorSecret { get; set; }
         public byte[]? TemporaryCodeForGoogleAuthenticator { get; set; }
+        public int RoleId { get; set; }
+        public virtual Role Role { get; set; }
     }
 
     public enum UserStatus
