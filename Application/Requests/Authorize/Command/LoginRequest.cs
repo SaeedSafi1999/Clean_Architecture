@@ -62,11 +62,13 @@ namespace Core.Application.Requests.Authorize.Command
                     {
                         Operator.Message =  "User Is Not Active";
                         Operator.IsSuccess = false;
+                        Operator.StatusCode = System.Net.HttpStatusCode.InternalServerError;
                     }
                     else
                     {
                         Operator.Message = "Invalid Pass Or Mobile";
                         Operator.IsSuccess = false;
+                        Operator.StatusCode = System.Net.HttpStatusCode.InternalServerError;
                     }
                 }
 

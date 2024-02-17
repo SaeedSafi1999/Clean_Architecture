@@ -3,6 +3,7 @@ using Application.Cqrs.Queris;
 using Core.Application.Requests.User.Command;
 using Core.Application.Requests.User.DTO;
 using Core.Application.Requests.User.Query;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,6 +31,7 @@ namespace Presentation.API.Controllers
             return Ok(response);
         }
 
+        [Authorize]
         [HttpGet("[action]")]
         public async Task<IActionResult> GetAllUsers()
         {
