@@ -24,7 +24,6 @@ namespace Infrestructure.Persistance.Database.DependencyInjection
         {
 
             Services.AddScoped<IApplicationDataContext, ApplicationDataContext>();
-
             Services.AddDbContext<ApplicationDataContext>(options =>
             {
                 options.UseSqlServer("Server=192.168.1.20;Database=Clean_ArchitectureDB;User Id=sa;Password=Simagar@2020; MultipleActiveResultSets=True;Connection Timeout=30;TrustServerCertificate=True;");

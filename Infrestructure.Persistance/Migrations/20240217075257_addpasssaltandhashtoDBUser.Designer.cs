@@ -4,6 +4,7 @@ using Infrestructure.Persistance.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrestructure.Persistance.Migrations
 {
     [DbContext(typeof(ApplicationDataContext))]
-    partial class ApplicationDataContextModelSnapshot : ModelSnapshot
+    [Migration("20240217075257_addpasssaltandhashtoDBUser")]
+    partial class addpasssaltandhashtoDBUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,21 +100,21 @@ namespace Infrestructure.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 2, 17, 13, 36, 12, 535, DateTimeKind.Local).AddTicks(8145),
+                            CreatedAt = new DateTime(2024, 2, 17, 11, 22, 57, 217, DateTimeKind.Local).AddTicks(9374),
                             IsDeleted = false,
                             RoleName = "SuperAdmin"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2024, 2, 17, 13, 36, 12, 535, DateTimeKind.Local).AddTicks(8166),
+                            CreatedAt = new DateTime(2024, 2, 17, 11, 22, 57, 217, DateTimeKind.Local).AddTicks(9386),
                             IsDeleted = false,
                             RoleName = "Admin"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2024, 2, 17, 13, 36, 12, 535, DateTimeKind.Local).AddTicks(8168),
+                            CreatedAt = new DateTime(2024, 2, 17, 11, 22, 57, 217, DateTimeKind.Local).AddTicks(9387),
                             IsDeleted = false,
                             RoleName = "User"
                         });
@@ -195,12 +198,6 @@ namespace Infrestructure.Persistance.Migrations
                     b.Property<byte[]>("PasswordSalt")
                         .IsRequired()
                         .HasColumnType("varbinary(max)");
-
-                    b.Property<string>("RefreshToken")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("RefreshTokenExpiryTime")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("RoleId")
                         .HasColumnType("int");

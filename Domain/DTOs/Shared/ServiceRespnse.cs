@@ -18,7 +18,7 @@ namespace Core.Domain.DTOs.Shared
 
     public interface IServiceResponse<T>
     {
-        ServiceRespnse<T> OK(HttpStatusCode status = HttpStatusCode.OK);
+        ServiceRespnse<T> OK(T data, HttpStatusCode status = HttpStatusCode.OK);
         ServiceRespnse<T> Failed(HttpStatusCode status, Hashtable errors);
     }
 
@@ -35,9 +35,9 @@ namespace Core.Domain.DTOs.Shared
             return new ServiceRespnse<T>() { IsSuccess = false, Errors = errors, Message = "Operation Failed", StatusCode = StatusCode };
         }
 
-        public ServiceRespnse<T> OK(HttpStatusCode status = HttpStatusCode.OK)
+        public ServiceRespnse<T> OK(T data,HttpStatusCode status = HttpStatusCode.OK)
         {
-            return new ServiceRespnse<T>() { IsSuccess = true };
+            return new ServiceRespnse<T>() { IsSuccess = true,Data = data };
         }
     }
 

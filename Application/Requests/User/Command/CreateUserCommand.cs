@@ -12,6 +12,8 @@ using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 using Core.Application.Extensions;
 using System.Net;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Core.Application.Requests.User.Command
 {
@@ -31,31 +33,26 @@ namespace Core.Application.Requests.User.Command
 
             public async Task<IServiceResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
             {
-                // set validation
-                Hashtable validationErrors = new();
-                string[] requiredProperties = { "FirstName", "LastName", "UserName", "Mobile","Email" };
-                foreach (var property in requiredProperties)
-                {
-                    if (string.IsNullOrEmpty(request.CreateUserDTO.GetType().GetProperty(property).GetValue(request.CreateUserDTO) as string))
-                    {
-                        validationErrors.Add(property, "MustHaveValue");
-                    }
-                }
-                if (!request.CreateUserDTO.IsReadRules)
-                {
-                    validationErrors.Add("IsReadRule", "MustHaveValueAndTrue");
-                }
-                if (validationErrors.Count > 0)
-                {
-                    return new ServiceRespnse().Failed(HttpStatusCode.BadRequest, validationErrors);
-                }
+                // set validation here if you need with hash table
+                var Errors = new Hashtable();
 
-                try
+                //generate Hash for password
+                HashExtension.MakeHmacHashCode(request.CreateUserDTO.Password, out byte[] hash, out byte[] salt);
+                //get repository
+                var Repository = _ProtectedDb.GetRepository<Entities.UsersEntity.User>();
+                var UserExist = await Repository.GetAsNoTrackingQuery().AnyAsync(z => z.Mobile == request.CreateUserDTO.Mobile);
+                if (UserExist)
                 {
-                    var Repository = _ProtectedDb.GetRepository<Entities.UsersEntity.User>();
+                    Errors.Add("Mobile", "Mobile Must Be Unique");
+                    return new ServiceRespnse().Failed(HttpStatusCode.NotFound, Errors);
+                }
+                else
+                {
                     var insertedData = await Repository.AddAsync(new Entities.UsersEntity.User
                     {
                         About = request.CreateUserDTO.About,
+                        PasswordHash = hash,
+                        PasswordSalt = salt,
                         Age = request.CreateUserDTO.Age,
                         Mobile = request.CreateUserDTO.Mobile,
                         Email = request.CreateUserDTO.Email,
@@ -76,12 +73,6 @@ namespace Core.Application.Requests.User.Command
 
                     return new ServiceRespnse().OK();
                 }
-                catch (Exception ex)
-                {
-                    validationErrors.Add("HasException", ex.Message);
-                    return new ServiceRespnse().Failed(HttpStatusCode.InternalServerError, validationErrors);
-                }
-
             }
 
         }

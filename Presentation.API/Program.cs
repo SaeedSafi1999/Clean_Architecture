@@ -2,7 +2,7 @@ using Core.Application.Extensions;
 using Infrestructure.Persistance.Extensions;
 using Microsoft.AspNetCore.Builder;
 using WebFramework.Configuration;
-using WebFramework.Middlewares;
+//using WebFramework.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +22,7 @@ var app = builder.Build();
 
 app.IntializeDatabase();
 
-app.UseCustomExceptionHandler();
+//app.UseCustomExceptionHandler();
 
 app.UseHsts(app.Environment);
 

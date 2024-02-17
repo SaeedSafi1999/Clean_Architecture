@@ -14,6 +14,8 @@ namespace Entities.UsersEntity
             IsActive = false;
         }
         public string FullName { get; set; }
+        public byte[] PasswordHash { get; set; }
+        public byte[] PasswordSalt { get; set; }
         public string Mobile { get; set; }
         public string? Email { get; set; }
         public string FirstName { get; set; }
@@ -36,6 +38,8 @@ namespace Entities.UsersEntity
         public byte[]? TemporaryCodeForGoogleAuthenticator { get; set; }
         public int RoleId { get; set; }
         public virtual Role Role { get; set; }
+        public string? RefreshToken { get; set; }
+        public DateTime? RefreshTokenExpiryTime { get; set; }
     }
 
     public enum UserStatus

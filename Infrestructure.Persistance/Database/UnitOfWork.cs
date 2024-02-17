@@ -1,5 +1,6 @@
 ﻿using Core.Application.Common;
 using Core.Application.Database;
+using Core.Application.Extensions;
 using Core.Application.Repositories;
 using Core.Domain.Entities;
 using Infrestructure.Persistance.Repositories;
@@ -14,23 +15,23 @@ namespace Infrestructure.Persistance.Database
 {
     internal class UnitOfWork : IUnitOfWork
     {
-        private readonly IApplicationDataContext _context;
+        private readonly Core.Application.Database.IApplicationDataContext _context;
         private Hashtable _repositories;
         private ProductRepository _productRepository;
         private CompanyRepository _CompanyRepository;
         private UserRepository _userRepository;
 
-        public UnitOfWork(IApplicationDataContext context)
+        public UnitOfWork(Core.Application.Database.IApplicationDataContext context)
         {
             _context = context;
             _repositories = new Hashtable();
         }
 
         public ICompanyRepository CompanyRepository => _CompanyRepository ??= new(_context);
-        public IProductRepository ProductRepository =>_productRepository??= new(_context);
-        public IUserRepository UserRepository =>_userRepository??= new(_context);
+        public IProductRepository ProductRepository => _productRepository ??= new(_context);
+        public IUserRepository UserRepository => _userRepository ??= new(_context);
 
-        public  int Commit() =>  _context.SaveChanges();
+        public int Commit() => _context.SaveChanges();
 
 
         public async Task<int> CommitAsync(CancellationToken cancellationToken = default) => await _context.SaveChangesAsync(cancellationToken);

@@ -1,6 +1,8 @@
 ﻿using Application.Cqrs.Commands;
+using Application.Cqrs.Queris;
 using Core.Application.Requests.User.Command;
 using Core.Application.Requests.User.DTO;
+using Core.Application.Requests.User.Query;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,10 +13,12 @@ namespace Presentation.API.Controllers
     public class UserController : ControllerBase
     {
         private readonly ICommandDispatcher _commandDispatcher;
+        private readonly IQueryDispatcher _queryDispatcher;
 
-        public UserController(ICommandDispatcher commandDispatcher)
+        public UserController(ICommandDispatcher commandDispatcher, IQueryDispatcher queryDispatcher)
         {
             _commandDispatcher = commandDispatcher;
+            _queryDispatcher = queryDispatcher;
         }
 
         [HttpPost("[action]")]
@@ -24,6 +28,14 @@ namespace Presentation.API.Controllers
             query.CreateUserDTO = commnad;
             var response = await _commandDispatcher.SendAsync(query);
             return Ok(response);
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var query = new GetAllUsersQuery();
+            var respone = await _queryDispatcher.SendAsync(query);
+            return Ok(respone);
         }
     }
 }

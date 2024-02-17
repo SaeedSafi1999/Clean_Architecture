@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions;
 using System.Reflection;
 using Application.Cqrs;
+using Core.Domain.DTOs.Shared;
 
 namespace Core.Application.Extensions
 {
@@ -47,6 +48,9 @@ namespace Core.Application.Extensions
 
             //add cqrs 
             Services.AddCqrs();
+
+            //add service response
+            Services.AddScoped<IServiceResponse,ServiceRespnse>();
 
 
             return Services;

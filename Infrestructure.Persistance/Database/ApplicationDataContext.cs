@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Infrestructure.Persistance.Database
 {
-    public class ApplicationDataContext : DbContext, IApplicationDataContext
+    public class ApplicationDataContext : DbContext, Core.Application.Database.IApplicationDataContext
     {
 
         public ApplicationDataContext(DbContextOptions<ApplicationDataContext> options):base(options)
