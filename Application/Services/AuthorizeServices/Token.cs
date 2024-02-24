@@ -12,16 +12,18 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Core.Application.Extensions;
+using Core.Domain.Entities.Role;
 
 namespace Core.Application.Services.AuthorizeServices
 {
 
     public interface IToken
     {
+
         public Task<TokenDTO> Get(User user, CancellationToken cancellationToken = default);
         public Task<IServiceResponse<TokenDTO>> RefreshAsync(RefreshTokenDTO tokenApiModel, CancellationToken cancellationToken = default);
     }
-    public class Token :IScopedDependency, IToken
+    public class Token : IScopedDependency, IToken
     {
         #region Constructor
         private readonly IConfiguration configuration;
@@ -38,19 +40,24 @@ namespace Core.Application.Services.AuthorizeServices
         }
         #endregion
 
+        private async Task<string> GetRoleNameByRoleId(long id)
+        {
+            return await _unitOfWork.GetRepository<Role>().GetAsNoTrackingQuery().Where(x => x.Id == id).Select(z => z.RoleName).FirstOrDefaultAsync();
+        }
 
         public async Task<TokenDTO> Get(User user, CancellationToken cancellationToken = default)
         {
             var _UserRepo = _unitOfWork.GetRepository<User>();
             if (user != null)
             {
+                var roleName = await GetRoleNameByRoleId(user.RoleId);
                 var authClaims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, user.UserName),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                     new Claim(ClaimTypes.MobilePhone, user.Mobile),
-                   new Claim(ClaimTypes.Role, user.RoleId.ToString())
+                   new Claim(ClaimTypes.Role, roleName)
                 };
 
                 var token = GenerateJwtToken(authClaims);
