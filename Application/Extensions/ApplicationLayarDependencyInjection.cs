@@ -7,13 +7,19 @@ using Microsoft.Extensions;
 using System.Reflection;
 using Application.Cqrs;
 using Core.Domain.DTOs.Shared;
+using Core.Application.SiteSetting;
+using System.Runtime.CompilerServices;
+using Microsoft.Extensions.Configuration;
 
 namespace Core.Application.Extensions
 {
     public static class ApplicationLayarDependencyInjection
     {
-        public static IServiceCollection AddApplicationServices(this IServiceCollection Services)
+        public static IServiceCollection AddApplicationServices(this IServiceCollection Services,IConfiguration configuration)
         {
+            //ad settings
+            Container.AddSettings(Services,configuration);
+
             //Add AutoMapper Services
             MapperInjection.AddMapperServcies(Services);
 

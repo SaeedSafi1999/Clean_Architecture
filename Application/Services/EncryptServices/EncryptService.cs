@@ -1,4 +1,5 @@
-﻿using Core.Application.Services.EncryptServices.Settings;
+﻿using Core.Application.Extensions;
+using Core.Application.SiteSetting;
 using Core.Domain.DTOs.Shared;
 using System;
 using System.Collections;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Core.Application.Services.EncryptServices
 {
-    internal class EncryptService : IEncryptService
+    internal class EncryptService :IScopedDependency, IEncryptService
     {
         private readonly ICryptographySetting _setting;
 
@@ -19,28 +20,38 @@ namespace Core.Application.Services.EncryptServices
             _setting = setting;
         }
 
-        public IServiceResponse<string> Decrypt(string text)
+        public IServiceResponse<string> Decrypt(string encryptedText)
         {
-            using (AesCryptoServiceProvider aes = new AesCryptoServiceProvider())
+            var Errors = new Hashtable();
+            if (string.IsNullOrEmpty(encryptedText))
             {
-                var key = aes.Key;
-                var iv = aes.IV;
+                Errors.Add("encryptedText", "empty");
+                return new ServiceRespnse<string>().Failed(System.Net.HttpStatusCode.NotFound, Errors);
+            }
+
+            byte[] iv = new byte[16];
+            byte[] encryptedBytes = Convert.FromBase64String(encryptedText);
+
+            using (System.Security.Cryptography.Aes aes = System.Security.Cryptography.Aes.Create())
+            {
+                aes.Key = Encoding.UTF8.GetBytes(_setting.Key);
+                aes.IV = iv;
 
                 ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
 
-                using (MemoryStream ms = new MemoryStream(Convert.FromBase64String(text)))
+                using (MemoryStream memoryStream = new MemoryStream(encryptedBytes))
                 {
-                    using (CryptoStream cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read))
+                    using (CryptoStream cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))
                     {
-                        using (StreamReader reader = new StreamReader(cs))
+                        using (StreamReader streamReader = new StreamReader(cryptoStream))
                         {
-                            var result = reader.ReadToEnd();
-                            return new ServiceRespnse<string>().OK(result);
+                            return new ServiceRespnse<string>().OK(streamReader.ReadToEnd());
                         }
                     }
                 }
             }
         }
+
 
         public IServiceResponse<string> Encrypt(string text)
         {

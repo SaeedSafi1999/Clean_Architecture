@@ -18,7 +18,7 @@ builder.Services.AddCors(options => options.AddPolicy("myPol", builder =>
 }));
 
 //Add Services Related To Application Layer 
-builder.Services.AddApplicationServices();
+builder.Services.AddApplicationServices(builder.Configuration);
 
 //Add Services Related To Persistence Infrastructure layer
 builder.Services.AddPersistanceInfrestructurelayarServcies();
