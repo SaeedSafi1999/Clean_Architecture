@@ -10,6 +10,7 @@ using Core.Domain.DTOs.Shared;
 using Core.Application.SiteSetting;
 using System.Runtime.CompilerServices;
 using Microsoft.Extensions.Configuration;
+using Core.Application.Common;
 
 namespace Core.Application.Extensions
 {
@@ -57,7 +58,7 @@ namespace Core.Application.Extensions
 
             //add service response
             Services.AddScoped<IServiceResponse,ServiceRespnse>();
-
+            return Services.AddScoped(typeof(IPaymentZarinPalServiceResponse<>), typeof(PaymentZarinPalServiceResponse<>));
 
             return Services;
         }
