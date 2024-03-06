@@ -12,16 +12,18 @@ namespace Core.Application.Services.PaymentGateways.ZarinPal
 {
     public static class ZarinPal
     {
-        const string merchant1 = "6410b846-8728-4592-86e7-d13a5266475c";
-        const string merchant = "c3b22ffd-7f8d-450d-892c-d4f8874ca7c3";
+        const string merchant = "your-merchant-string";
         const string description = "your description";
         const string Callbackurl = "your comeback url";
 
-        public async static Task<IPaymentZarinPalServiceResponse<string>> PayRequest(string amount, string? phone, string callbackurl = Callbackurl)
+        public async static Task<IPaymentZarinPalServiceResponse<string>> PayRequest(string amount, string? phone,
+            string callbackurl = Callbackurl)
         {
             try
             {
-                Core.Application.Services.PaymentGateways.ZarinPal.DTO.RequestParameters Parameters = new Core.Application.Services.PaymentGateways.ZarinPal.DTO.RequestParameters(merchant, amount, description, callbackurl, phone, "");
+                Core.Application.Services.PaymentGateways.ZarinPal.DTO.RequestParameters Parameters =
+                    new Core.Application.Services.PaymentGateways.ZarinPal.DTO.RequestParameters(merchant, amount,
+                        description, callbackurl, phone, "");
 
                 var client1 = new RestClient(URLs.requestUrl);
 
@@ -68,7 +70,6 @@ namespace Core.Application.Services.PaymentGateways.ZarinPal
                         ErrorMessage = $"PayError:{errorscode}"
                     };
                 }
-
             }
 
             catch (Exception ex)
@@ -82,7 +83,8 @@ namespace Core.Application.Services.PaymentGateways.ZarinPal
             }
         }
 
-        public static IPaymentZarinPalServiceResponse<string> VerifyPayment(string Authority, string amount, string Status)
+        public static IPaymentZarinPalServiceResponse<string> VerifyPayment(string Authority, string amount,
+            string Status)
         {
             if (Status == "OK")
             {
@@ -161,7 +163,6 @@ namespace Core.Application.Services.PaymentGateways.ZarinPal
                     IsSuccess = false,
                 };
             }
-
         }
     }
 }
