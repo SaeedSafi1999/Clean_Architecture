@@ -2,17 +2,9 @@
 using Core.Application.Database;
 using Core.Application.Requests.User.DTO;
 using Core.Domain.DTOs.Shared;
-using Entities.Users;
-using Entities.UsersEntity;
 using System.Collections;
-using System.ComponentModel.DataAnnotations;
-using System.Net.Http.Json;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using Newtonsoft.Json;
 using Core.Application.Extensions;
 using System.Net;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Core.Application.Requests.User.Command
@@ -40,7 +32,8 @@ namespace Core.Application.Requests.User.Command
                 HashExtension.MakeHmacHashCode(request.CreateUserDTO.Password, out byte[] hash, out byte[] salt);
                 //get repository
                 var Repository = _ProtectedDb.GetRepository<Entities.UsersEntity.User>();
-                var UserExist = await Repository.GetAsNoTrackingQuery().AnyAsync(z => z.Mobile == request.CreateUserDTO.Mobile);
+                var UserExist = await Repository.GetAsNoTrackingQuery()
+                    .AnyAsync(z => z.Mobile == request.CreateUserDTO.Mobile);
                 if (UserExist)
                 {
                     Errors.Add("Mobile", "Mobile Must Be Unique");
@@ -74,8 +67,6 @@ namespace Core.Application.Requests.User.Command
                     return new ServiceRespnse().OK();
                 }
             }
-
         }
-
     }
 }

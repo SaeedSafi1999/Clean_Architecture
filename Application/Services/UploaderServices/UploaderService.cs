@@ -11,8 +11,8 @@ namespace Services.Services.Uploader
     public class UploaderService : IScopedDependency, IUploaderService
     {
         private readonly IWebHostEnvironment _WebHost;
-
         //supported types you can add more here...
+
         private string[] supportedTypes = new[] { "jpg", "jpeg", "png", "webp" };
 
         public UploaderService(IWebHostEnvironment webHostEnvironment)
