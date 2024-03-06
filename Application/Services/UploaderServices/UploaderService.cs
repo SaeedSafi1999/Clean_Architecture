@@ -11,14 +11,15 @@ namespace Services.Services.Uploader
     public class UploaderService : IScopedDependency, IUploaderService
     {
         private readonly IWebHostEnvironment _WebHost;
+
         //supported types you can add more here...
         private string[] supportedTypes = new[] { "jpg", "jpeg", "png", "webp" };
 
         public UploaderService(IWebHostEnvironment webHostEnvironment)
         {
             _WebHost = webHostEnvironment;
-
         }
+
         /// <summary>
         /// upload as jpg
         /// </summary>
@@ -45,7 +46,8 @@ namespace Services.Services.Uploader
                 return null;
 
             //make new file name
-            var fileName = Guid.NewGuid().ToString() + "_" + Path.GetFileNameWithoutExtension(Request.File.FileName) + ".jpg";
+            var fileName = Guid.NewGuid().ToString() + "_" + Path.GetFileNameWithoutExtension(Request.File.FileName) +
+                           ".jpg";
 
 
             //final path file 
@@ -67,11 +69,12 @@ namespace Services.Services.Uploader
                     {
                         await Image.SaveAsync(fs, new PngEncoder());
                     }
-
                 }
+
                 return $"{Request.Path}/{fileName}";
             }
         }
+
         /// <summary>
         /// upload as jpeg
         /// </summary>
@@ -98,7 +101,8 @@ namespace Services.Services.Uploader
                 return null;
 
             //make new file name
-            var fileName = Guid.NewGuid().ToString() + "_" + Path.GetFileNameWithoutExtension(Request.File.FileName) + ".jpeg";
+            var fileName = Guid.NewGuid().ToString() + "_" + Path.GetFileNameWithoutExtension(Request.File.FileName) +
+                           ".jpeg";
 
 
             //final path file 
@@ -120,11 +124,12 @@ namespace Services.Services.Uploader
                     {
                         await Image.SaveAsync(fs, new PngEncoder());
                     }
-
                 }
+
                 return $"{Request.Path}/{fileName}";
             }
         }
+
         /// <summary>
         /// upload as png
         /// </summary>
@@ -151,7 +156,8 @@ namespace Services.Services.Uploader
                 return null;
 
             //make new file name
-            var fileName = Guid.NewGuid().ToString() + "_" + Path.GetFileNameWithoutExtension(Request.File.FileName) + ".png";
+            var fileName = Guid.NewGuid().ToString() + "_" + Path.GetFileNameWithoutExtension(Request.File.FileName) +
+                           ".png";
 
 
             //final path file 
@@ -173,12 +179,13 @@ namespace Services.Services.Uploader
                     {
                         await Image.SaveAsync(fs, new PngEncoder());
                     }
-
                 }
+
                 return $"{Request.Path}/{fileName}";
             }
-
         }
+
+
         /// <summary>
         /// upload with webp
         /// </summary>
@@ -205,7 +212,8 @@ namespace Services.Services.Uploader
                 return null;
 
             //make new file name
-            var fileName = Guid.NewGuid().ToString() + "_" + Path.GetFileNameWithoutExtension(Request.File.FileName) + ".webp";
+            var fileName = Guid.NewGuid().ToString() + "_" + Path.GetFileNameWithoutExtension(Request.File.FileName) +
+                           ".webp";
 
 
             //final path file 
@@ -225,21 +233,16 @@ namespace Services.Services.Uploader
                 {
                     using (Image Image = Image.Load(Request.File.OpenReadStream()))
                     {
-
                         await Image.SaveAsync(fs, new WebpEncoder
                         {
                             Quality = 70,
                             FileFormat = WebpFileFormatType.Lossy,
                         });
-
                     }
-
                 }
+
                 return $"{Request.Path}/{fileName}";
             }
-
-
-
         }
     }
 }
