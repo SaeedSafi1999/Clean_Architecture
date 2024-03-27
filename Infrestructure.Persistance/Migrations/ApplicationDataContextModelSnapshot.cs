@@ -97,21 +97,21 @@ namespace Infrestructure.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 2, 17, 13, 36, 12, 535, DateTimeKind.Local).AddTicks(8145),
+                            CreatedAt = new DateTime(2024, 3, 23, 13, 30, 40, 844, DateTimeKind.Local).AddTicks(8335),
                             IsDeleted = false,
                             RoleName = "SuperAdmin"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2024, 2, 17, 13, 36, 12, 535, DateTimeKind.Local).AddTicks(8166),
+                            CreatedAt = new DateTime(2024, 3, 23, 13, 30, 40, 844, DateTimeKind.Local).AddTicks(8360),
                             IsDeleted = false,
                             RoleName = "Admin"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2024, 2, 17, 13, 36, 12, 535, DateTimeKind.Local).AddTicks(8168),
+                            CreatedAt = new DateTime(2024, 3, 23, 13, 30, 40, 844, DateTimeKind.Local).AddTicks(8362),
                             IsDeleted = false,
                             RoleName = "User"
                         });

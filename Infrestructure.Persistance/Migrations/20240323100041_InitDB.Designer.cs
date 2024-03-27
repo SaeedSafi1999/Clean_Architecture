@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrestructure.Persistance.Migrations
 {
     [DbContext(typeof(ApplicationDataContext))]
-    [Migration("20240213104028_AddCompanyAndProduct")]
-    partial class AddCompanyAndProduct
+    [Migration("20240323100041_InitDB")]
+    partial class InitDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -71,7 +71,56 @@ namespace Infrestructure.Persistance.Migrations
                     b.ToTable("Products", "Products");
                 });
 
-            modelBuilder.Entity("Entities.Users.User", b =>
+            modelBuilder.Entity("Core.Domain.Entities.Role.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("RoleName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2024, 3, 23, 13, 30, 40, 844, DateTimeKind.Local).AddTicks(8335),
+                            IsDeleted = false,
+                            RoleName = "SuperAdmin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(2024, 3, 23, 13, 30, 40, 844, DateTimeKind.Local).AddTicks(8360),
+                            IsDeleted = false,
+                            RoleName = "Admin"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(2024, 3, 23, 13, 30, 40, 844, DateTimeKind.Local).AddTicks(8362),
+                            IsDeleted = false,
+                            RoleName = "User"
+                        });
+                });
+
+            modelBuilder.Entity("Entities.UsersEntity.User", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -88,13 +137,13 @@ namespace Infrestructure.Persistance.Migrations
                     b.Property<string>("AvatarImage")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Discord")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FaceBook")
@@ -138,6 +187,27 @@ namespace Infrestructure.Persistance.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("Mobile")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("RefreshTokenExpiryTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Telegram")
                         .HasColumnType("nvarchar(max)");
 
@@ -157,6 +227,8 @@ namespace Infrestructure.Persistance.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("RoleId");
+
                     b.ToTable("Users");
                 });
 
@@ -171,9 +243,25 @@ namespace Infrestructure.Persistance.Migrations
                     b.Navigation("Company");
                 });
 
+            modelBuilder.Entity("Entities.UsersEntity.User", b =>
+                {
+                    b.HasOne("Core.Domain.Entities.Role.Role", "Role")
+                        .WithMany("Users")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+                });
+
             modelBuilder.Entity("Core.Domain.Entities.Company", b =>
                 {
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("Core.Domain.Entities.Role.Role", b =>
+                {
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

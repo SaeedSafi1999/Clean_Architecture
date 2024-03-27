@@ -1,6 +1,7 @@
 ﻿using Core.Application.Common;
 using Core.Application.Database;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -20,13 +21,13 @@ namespace Infrestructure.Persistance.Database.DependencyInjection
         }
 
         //Add DbContext Dependency Method
-        public static IServiceCollection AddDbContextServices(this IServiceCollection Services)
+        public static IServiceCollection AddDbContextServices(this IServiceCollection Services,IConfiguration configuration)
         {
 
             Services.AddScoped<IApplicationDataContext, ApplicationDataContext>();
             Services.AddDbContext<ApplicationDataContext>(options =>
             {
-                options.UseSqlServer("Server=192.168.1.20;Database=Clean_ArchitectureDB;User Id=sa;Password=Simagar@2020; MultipleActiveResultSets=True;Connection Timeout=30;TrustServerCertificate=True;");
+                options.UseSqlServer(configuration.GetConnectionString("LocalConnection"));
             });
 
             return Services;

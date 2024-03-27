@@ -21,7 +21,7 @@ builder.Services.AddCors(options => options.AddPolicy("myPol", builder =>
 builder.Services.AddApplicationServices(builder.Configuration);
 
 //Add Services Related To Persistence Infrastructure layer
-builder.Services.AddPersistanceInfrestructurelayarServcies();
+builder.Services.AddPersistanceInfrestructurelayarServcies(builder.Configuration);
 
 var app = builder.Build();
 
@@ -31,12 +31,10 @@ app.IntializeDatabase();
 
 app.UseHsts(app.Environment);
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
 app.UseCors("myPol");
 app.UseHttpsRedirection();
 app.UseAuthorization();
