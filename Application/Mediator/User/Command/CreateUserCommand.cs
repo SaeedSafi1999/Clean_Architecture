@@ -9,12 +9,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Core.Application.Requests.User.Command
 {
-    public class CreateUserCommand : ICommand<IServiceResponse>
+    public class CreateUserCommand : ICommand<ServiceRespnse>
     {
         public CreateUserDTO CreateUserDTO { get; set; }
 
 
-        public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand, IServiceResponse>
+        public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand, ServiceRespnse>
         {
             private readonly IUnitOfWork _ProtectedDb;
 
@@ -23,17 +23,30 @@ namespace Core.Application.Requests.User.Command
                 _ProtectedDb = protectedDb;
             }
 
-            public async Task<IServiceResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+            public async Task<ServiceRespnse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
             {
                 // set validation here if you need with hash table
                 var Errors = new Hashtable();
 
+                byte[]? saltSet = null;
+                byte[]? hashSet = null;
                 //generate Hash for password
-                HashExtension.MakeHmacHashCode(request.CreateUserDTO.Password, out byte[] hash, out byte[] salt);
-                //get repository
+                if (request.CreateUserDTO.Password != null)
+                {
+                    HashExtension.MakeHmacHashCode(request.CreateUserDTO.Password, out byte[] hash, out byte[] salt);
+                    saltSet = salt;
+                    hashSet = hash;
+                }
+
+                bool UserExist = false;
                 var Repository = _ProtectedDb.GetRepository<Entities.UsersEntity.User>();
-                var UserExist = await Repository.GetAsNoTrackingQuery()
-                    .AnyAsync(z => z.Mobile == request.CreateUserDTO.Mobile);
+                //get repository
+                if (!string.IsNullOrEmpty(request.CreateUserDTO.Mobile))
+                {
+                    UserExist = await Repository.GetAsNoTrackingQuery()
+                       .AnyAsync(z => z.Mobile == request.CreateUserDTO.Mobile);
+                }
+
                 if (UserExist)
                 {
                     Errors.Add("Mobile", "Mobile Must Be Unique");
@@ -43,24 +56,18 @@ namespace Core.Application.Requests.User.Command
                 {
                     var insertedData = await Repository.AddAsync(new Entities.UsersEntity.User
                     {
-                        About = request.CreateUserDTO.About,
-                        PasswordHash = hash,
-                        PasswordSalt = salt,
-                        Age = request.CreateUserDTO.Age,
+                        TelegramId = request.CreateUserDTO.TelegramId,
+                        PasswordHash = hashSet.Length > 0 ? hashSet : null,
+                        PasswordSalt = saltSet.Length > 0 ? saltSet : null,
                         Mobile = request.CreateUserDTO.Mobile,
                         Email = request.CreateUserDTO.Email,
-                        Discord = request.CreateUserDTO.Discord,
-                        FaceBook = request.CreateUserDTO.FaceBook,
                         FirstName = request.CreateUserDTO.FirstName,
                         FullName = request.CreateUserDTO.FullName,
-                        Gender = request.CreateUserDTO.Gender,
-                        IsReadRules = request.CreateUserDTO.IsReadRules,
                         LastName = request.CreateUserDTO.LastName,
-                        Telegram = request.CreateUserDTO.Telegram,
-                        UserType = request.CreateUserDTO.UserType,
+                        UserType = Entities.Users.UserType.DefaultUser,
                         UserName = request.CreateUserDTO.UserName,
                         RoleId = 3
-                    });
+                    }); ;
 
                     await _ProtectedDb.CommitAsync();
 

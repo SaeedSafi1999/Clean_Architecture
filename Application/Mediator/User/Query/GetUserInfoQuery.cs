@@ -46,21 +46,16 @@ namespace Core.Application.Mediator.User.Query
                 }
                 var result = new GetUserInfoDTO
                 {
-                    About = user.About,
-                    Age = user.Age,
-                    Discord = user.Discord,
+
                     Email = user.Email,
-                    FaceBook = user.FaceBook,
                     FirstName = user.FirstName,
                     FullName = user.FullName,
-                    Gender = user.Gender,
                     LastName = user.LastName,
                     Mobile = user.Mobile,
-                    Telegram = user.Telegram,
                     UserName = user.UserName,
                     UserType = user.UserType,
                 };
-                return Operations.OK(result); 
+                return Operations.OK(result,total:null); 
             }
         }
     }

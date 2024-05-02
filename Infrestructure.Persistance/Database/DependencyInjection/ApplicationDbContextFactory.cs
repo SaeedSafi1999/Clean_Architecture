@@ -23,7 +23,8 @@ namespace Infrestructure.Persistance.Database.DependencyInjection
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDataContext>();
             optionsBuilder.UseSqlServer("Server=.;Initial Catalog=Clean_ArchitectureDB;Integrated Security=true;TrustServerCertificate=True;");
 
-            return new ApplicationDataContext(optionsBuilder.Options);
+            //return new ApplicationDataContext(optionsBuilder.Options);
+            return null;
         }
     }
 }

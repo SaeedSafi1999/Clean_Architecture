@@ -20,8 +20,6 @@ namespace Infrestructure.Persistance.Extensions
             //Add UnitOfWork Services
             Database.DependencyInjection.DatabaseDependencyInjection.AddUnitOfWorkServices(Servcies);
 
-            //Add CompanyRepository Dependencies
-            Servcies.AddScoped<ICompanyRepository, CompanyRepository>();
 
             return Servcies;
         }

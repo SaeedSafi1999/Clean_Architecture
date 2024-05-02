@@ -13,12 +13,10 @@ using System.Threading.Tasks;
 
 namespace Infrestructure.Persistance.Database
 {
-    internal class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly Core.Application.Database.IApplicationDataContext _context;
         private Hashtable _repositories;
-        private ProductRepository _productRepository;
-        private CompanyRepository _CompanyRepository;
         private UserRepository _userRepository;
 
         public UnitOfWork(Core.Application.Database.IApplicationDataContext context)
@@ -27,8 +25,7 @@ namespace Infrestructure.Persistance.Database
             _repositories = new Hashtable();
         }
 
-        public ICompanyRepository CompanyRepository => _CompanyRepository ??= new(_context);
-        public IProductRepository ProductRepository => _productRepository ??= new(_context);
+      
         public IUserRepository UserRepository => _userRepository ??= new(_context);
 
         public int Commit() => _context.SaveChanges();

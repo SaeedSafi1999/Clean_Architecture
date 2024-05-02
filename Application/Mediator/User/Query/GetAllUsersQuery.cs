@@ -35,7 +35,7 @@ namespace Core.Application.Requests.User.Query
                         UserName = z.UserName,
                     }).ToListAsync();
 
-                return new ServiceRespnse<IReadOnlyList<GetAllUserDTO>>().OK(data);
+                return new ServiceRespnse<IReadOnlyList<GetAllUserDTO>>().OK(data, total: null);
             }
         }
     }

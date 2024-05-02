@@ -18,9 +18,15 @@ namespace Infrestructure.Persistance.Database
     public class ApplicationDataContext : DbContext, Core.Application.Database.IApplicationDataContext
     {
 
-        public ApplicationDataContext(DbContextOptions<ApplicationDataContext> options):base(options)
-        {
+        //public ApplicationDataContext(DbContextOptions<ApplicationDataContext> options):base(options)
+        //{
                 
+        //}
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Server=.;Database=Rhino;User Id=sa;Password=1;TrustServerCertificate=True; MultipleActiveResultSets=True;");
+            base.OnConfiguring(optionsBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

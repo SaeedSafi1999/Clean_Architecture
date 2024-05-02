@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using Core.Domain.DTOs.Company;
-using Core.Domain.DTOs.Product;
 using Core.Domain.Entities;
 using Entities.UsersEntity;
 using System;

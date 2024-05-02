@@ -11,6 +11,7 @@ namespace Core.Application.Requests.User.DTO
 {
     public class CreateUserDTO
     {
+        public long TelegramId { get; set; }
         [Required(ErrorMessage ="FullName Must Has Value")]
         [MaxLength(30,ErrorMessage ="More Than 30 chars")]
         public string FullName { get; set; }
